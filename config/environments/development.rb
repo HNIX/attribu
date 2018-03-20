@@ -1,23 +1,4 @@
 Rails.application.configure do
-   
-  # devise says to define default url
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-
-  # set up for email sending even in dev mode
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
-
-  config.action_mailer.delivery_method = :smtp
-  
-  ActionMailer::Base.smtp_settings = {
-    :address => "smtp.gmail.com",
-    :port => "587",
-    :authentication => :plain,
-    :user_name => "hnix.au@gmail.com",
-    :password => ENV["SMTP_ENTRY"],
-    :enable_starttls_auto => true
-  }
-
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -60,23 +41,6 @@ Rails.application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
-
-  config.action_mailer.smtp_settings = {
-    address: "smtp.sendgrid.net",
-    port: 587,
-    domain: Rails.application.secrets.domain_name,
-    authentication: "plain",
-    enable_starttls_auto: true,
-    user_name: Rails.application.secrets.email_provider_username,
-    password: Rails.application.secrets.email_provider_password
-  }
-  # ActionMailer Config
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.raise_delivery_errors = true
-  # Send email in development mode?
-  config.action_mailer.perform_deliveries = true
-
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
