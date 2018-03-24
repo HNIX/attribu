@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180324003727) do
+ActiveRecord::Schema.define(version: 20180324175003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,23 @@ ActiveRecord::Schema.define(version: 20180324003727) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
+  create_table "source_linksets", force: :cascade do |t|
+    t.bigint "linkset_id"
+    t.bigint "source_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["linkset_id"], name: "index_source_linksets_on_linkset_id"
+    t.index ["source_id"], name: "index_source_linksets_on_source_id"
+  end
+
+  create_table "sources", force: :cascade do |t|
+    t.string "name"
+    t.string "medium"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tenants", force: :cascade do |t|
     t.bigint "tenant_id"
     t.string "name"
@@ -117,5 +134,7 @@ ActiveRecord::Schema.define(version: 20180324003727) do
   add_foreign_key "linksets", "campaigns"
   add_foreign_key "members", "tenants"
   add_foreign_key "members", "users"
+  add_foreign_key "source_linksets", "linksets"
+  add_foreign_key "source_linksets", "sources"
   add_foreign_key "tenants", "tenants"
 end

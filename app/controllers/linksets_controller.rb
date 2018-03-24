@@ -1,5 +1,5 @@
 class LinksetsController < ApplicationController
-  before_action :set_linkset, only: [:show, :edit, :update, :destroy, :add_destination, :destinations]
+  before_action :set_linkset, only: [:show, :edit, :update, :destroy, :add_destination, :destinations, :add_source, :sources]
 
 
 
@@ -72,13 +72,31 @@ class LinksetsController < ApplicationController
     respond_to do |format|
       if @linkset_destination.save
         format.html { redirect_to linkset_url(id: @linkset.id),
-          notice: 'Destination was successfully added to linkset' }
-        else
-          format.html { redirect_to linkset_url(id: @linkset.id),
-            error: 'Destination was not added to linkset' }
-          end
-        end
+        notice: 'Destination was successfully added to linkset' }
+      else
+        format.html { redirect_to linkset_url(id: @linkset.id),
+        error: 'Destination was not added to linkset' }
       end
+    end
+  end
+
+  def sources
+    @linkset_sources = @linkset.sources
+    @other_sources = Source.all - (@linkset_sources)
+  end
+
+  def add_source
+    @linkset_source = SourceLinkset.new(source_id: params[:source_id], linkset_id: @linkset.id)
+    respond_to do |format|
+      if @linkset_source.save
+        format.html { redirect_to linkset_url(id: @linkset.id),
+        notice: 'Source was successfully added to linkset' }
+      else
+        format.html { redirect_to linkset_url(id: @linkset.id),
+        error: 'Source was not added to linkset' }
+      end
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

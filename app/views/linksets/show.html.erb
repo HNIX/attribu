@@ -14,14 +14,21 @@
 <%= render 'destinations/list', destinations: @linkset.destinations %>
 <br />
 <br />
+<%= link_to 'Edit Linkset Destinations', destinations_linkset_path(id: @linkset.id),
+              :class => 'btn btn-default' %>
 
+<h3>Sources</h3>
+<%= render 'sources/list', sources: @linkset.sources %>
+<br />
+<br />
+<%= link_to 'Edit Linkset Sources', sources_linkset_path(id: @linkset.id),
+              :class => 'btn btn-default' %>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
               tenant_campaign_path(@linkset.campaign.tenant_id, @linkset.campaign_id), :class => 'btn btn-default'  %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_linkset_path(@linkset), :class => 'btn btn-default' %>
-<%= link_to 'Edit Linkset Destinations', destinations_linkset_path(id: @linkset.id),
-              :class => 'btn btn-default' %>
+
 <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               linkset_path(@linkset),
               :method => 'delete',

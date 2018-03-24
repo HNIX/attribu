@@ -1,13 +1,18 @@
 Rails.application.routes.draw do
 
 
+  resources :source_linksets
+  resources :sources
   resources :destination_linksets
+  resources :destinations
   resources :linksets do
     get 'destinations', on: :member
     put 'add_destination', on: :member
+    get 'sources', on: :member
+    put 'add_source', on: :member
   end
 
-  resources :destinations
+
 
   resources :tenants do
     resources :campaigns

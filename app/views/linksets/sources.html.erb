@@ -1,0 +1,52 @@
+<div class="page-header">
+  <h3>Sources for Linkset <%= @linkset.name %></h3>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @linkset_sources.each do |linkset_source| %>
+      <tr>
+        <td><%= linkset_source.name %></td>
+        <td>
+            <%= link_to "Remove", source_linkset_path(linkset_source.source_linksets.find_by(linkset_id: @linkset.id)),
+                                  :method => :delete,
+                                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                                  :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>Sources to add to Linkset <%= @linkset.name %></h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Medium</th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @other_sources.each do |other_source| %>
+      <tr>
+        <td><%= other_source.name %></td>
+        <td><%= other_source.medium %></td>
+        <td>
+          <%= link_to 'Add',
+                      add_source_linkset_path(id: @linkset.id, source_id: other_source.id),
+                      :method => :put,
+                      :class => 'btn btn-xs btn-success' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', linkset_path(id: @linkset.id),
+                      :class => 'btn btn-primary' %>
