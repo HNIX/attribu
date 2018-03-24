@@ -1,0 +1,36 @@
+<%= form_for @linkset, :html => { :class => "form-horizontal linkset" } do |f| %>
+
+  <% if @linkset.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@linkset.errors.count, "error") %> prohibited this linkset from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @linkset.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+  </div>
+  <%= f.hidden_field :campaign_id %>
+
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            tenant_campaign_path(tenant_id: Tenant.current_tenant_id,
+            id: @linkset.campaign_id), :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>

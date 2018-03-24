@@ -1,0 +1,57 @@
+<%- model_class = Linkset -%>
+
+<table class="table table-striped">
+
+<thead>
+
+<tr>
+
+<th><%= model_class.human_attribute_name(:name) %></th>
+
+<th><%= model_class.human_attribute_name(:created_at) %></th>
+
+<th><%=t '.actions', :default => t("helpers.actions") %></th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% linksets.each do |linkset| %>
+
+<tr>
+
+<td><%= link_to linkset.name, linkset_path(linkset), class: 'main-link' %></td>
+
+<td><%=l linkset.created_at %></td>
+
+<td>
+
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+
+edit_linkset_path(linkset), :class => 'btn btn-default btn-xs' %>
+
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+
+linkset_path(linkset),
+
+:method => :delete,
+
+:data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+
+:class => 'btn btn-xs btn-danger' %>
+
+</td>
+
+</tr>
+
+<% end %>
+
+</tbody>
+
+</table>
+
+<%= link_to 'New Linkset', new_linkset_path(campaign_id: @campaign.id),
+
+:class => 'btn btn-primary' %>

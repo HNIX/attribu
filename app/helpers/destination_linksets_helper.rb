@@ -1,0 +1,2 @@
+module DestinationLinksetsHelper
+end

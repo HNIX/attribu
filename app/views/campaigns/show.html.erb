@@ -1,0 +1,35 @@
+<%- model_class = Campaign -%>
+<div class="page-header">
+
+  <h3><%= @campaign.title %></h3>
+
+  <h3><small>Organization - <%= tenant_name @campaign.tenant_id %></small></h3>
+
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
+  <dd><%= @campaign.title %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
+  <dd><%= @campaign.description %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:tenant_id) %>:</strong></dt>
+  <dd><%= @campaign.tenant_id %></dd>
+</dl>
+
+<h3>Linksets</h3>
+
+<%= render 'linksets/list', linksets: @campaign.linksets %>
+
+<br />
+
+<br />
+
+<%= link_to '< Back to Organization Home', root_path, :class => 'btn btn-default' %>
+
+<%= link_to t('.edit', :default => t("helpers.links.edit")), edit_tenant_campaign_path(campaign: @campaign, tenant: @campaign.tenant_id), :class => 'btn btn-default' %>
+
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")), tenant_campaign_path(@campaign, @campaign.tenant_id),
+      :method => 'delete',
+      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm",
+      :default => 'Are you sure?')) },
+      :class => 'btn btn-danger' %>

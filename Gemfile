@@ -11,6 +11,9 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
+gem 'milia', github: 'jekuno/milia', branch: 'issue#76'
+gem 'twitter-bootstrap-rails'
+gem 'devise-bootstrap-views'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara', '~> 2.13'
@@ -27,6 +30,8 @@ gem 'devise'
 gem 'high_voltage'
 gem 'jquery-rails'
 gem 'pg', '~> 0.18'
+gem 'figaro'
+gem 'aws-sdk'
 group :development do
   gem 'better_errors'
   gem 'hub', :require=>nil
@@ -38,3 +43,5 @@ group :production do
   gem 'rails_12factor'
 
 end
+
+gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
