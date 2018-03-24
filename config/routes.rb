@@ -12,17 +12,14 @@ Rails.application.routes.draw do
     put 'add_source', on: :member
   end
 
-
-
   resources :tenants do
     resources :campaigns
   end
 
-
   resources :members
   get 'home/index'
 
-   root :to => "home#index"
+  root :to => "home#index"
 
 
   # *MUST* come *BEFORE* devise's definitions (below)
@@ -31,12 +28,13 @@ Rails.application.routes.draw do
   end
 
   devise_for :users, :controllers => {
-    :registrations => "milia/registrations",
+    :registrations => "registrations",
     :confirmations => "confirmations",
     :sessions => "milia/sessions",
     :passwords => "milia/passwords",
   }
 
+  match '/plan/edit' => 'tenants#edit', via: :get, as: :edit_plan
+  match '/plan/update' => 'tenants#update', via: [:put, :patch], as: :update_plan
 
-  resources :users
 end
