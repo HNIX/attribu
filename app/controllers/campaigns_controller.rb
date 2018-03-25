@@ -1,12 +1,12 @@
 class CampaignsController < ApplicationController
-  before_action :set_campaign, only: [:show, :edit, :update, :destroy]
-  before_action :set_tenant, only: [:show, :edit, :update, :destroy, :new, :create]
+  before_action :set_campaign, only: [:show, :edit, :update, :destroy, :users, :add_user]
+  before_action :set_tenant, only: [:show, :edit, :update, :destroy, :new, :create, :users, :add_user]
   before_action :verify_tenant
 
   # GET /campaigns
   # GET /campaigns.json
   def index
-    @campaigns = Campaign.all
+    @campaigns = Campaign.by_user_plan_and_tenant(params[:tenant_id], current_user)
   end
 
   # GET /campaigns/1
@@ -17,6 +17,7 @@ class CampaignsController < ApplicationController
   # GET /campaigns/new
   def new
     @campaign = Campaign.new
+    @campaign.users << current_user
   end
 
   # GET /campaigns/1/edit
@@ -27,6 +28,7 @@ class CampaignsController < ApplicationController
   # POST /campaigns.json
   def create
     @campaign = Campaign.new(campaign_params)
+    @campaign.users << current_user
 
     respond_to do |format|
       if @campaign.save
@@ -56,6 +58,26 @@ class CampaignsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to root_url, notice: 'Campaign was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def users
+    @campaign_users = (@campaign.users + (User.where(tenant_id: @tenant.id, is_admin: true))) - [current_user]
+    @other_users = @tenant.users.where(is_admin: false) - (@campaign_users + [current_user])
+  end
+
+  def add_user
+    @campaign_user = UserCampaign.new(user_id: params[:user_id], campaign_id: @campaign.id)
+    respond_to do |format|
+      if @campaign_user.save
+        format.html { redirect_to users_tenant_campaign_url(id: @campaign.id,
+        tenant_id: @campaign.tenant_id),
+        notice: 'User was successfully added to campaign' }
+      else
+        format.html { redirect_to users_tenant_campaign_url(id: @campaign.id,
+        tenant_id: @campaign.tenant_id),
+        error: 'User was not added to campaign' }
+      end
     end
   end
 

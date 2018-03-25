@@ -10,8 +10,7 @@ class HomeController < ApplicationController
       end
 
       @tenant = Tenant.current_tenant
-      @campaigns = Campaign.by_plan_and_tenant(@tenant.id)
-      params[:tenant_id] = @tenant.id
+      @campaigns = Campaign.by_user_plan_and_tenant(@tenant.id, current_user)
 
     end
 

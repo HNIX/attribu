@@ -1,0 +1,27 @@
+<% if sources.size > 0 && destinations.size > 0 %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Destination</th>
+      <th>Source</th>
+      <th>Attributed Link</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% destinations.each do |destination| %>
+    <% sources.each do |source| %>
+      <tr>
+        <td><%= link_to destination.name, destination_path(destination), class: 'main-link' %></td>
+        <td><%= link_to source.name, source_path(source), class: 'main-link' %></td>
+        <td><%= destination.url + "?utm_source=" + source.name + "&utm_medium=" + source.medium + "&utm_campaign=" + @linkset.campaign.title%></td>
+      </tr>
+    <% end %>
+  <% end %>
+</tbody>
+</table>
+
+<% else %>
+
+<p class="lead">You don't have any links</p>
+
+<% end %>

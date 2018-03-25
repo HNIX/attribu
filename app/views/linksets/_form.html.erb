@@ -21,8 +21,58 @@
       <%= f.text_field :name, :class => 'form-control' %>
     </div>
   </div>
-  <%= f.hidden_field :campaign_id %>
+  <div class="form-group">
+    <label class="control-label col-lg-2" >Select destinations</label>
+    <div class="col-lg-10">
+      <%= f.collection_check_boxes :destination_ids, Destination.all, :id, :name %>
+    </div>
+  </div>
 
+    <%= f.fields_for :destinations, @linkset.destinations.build do |destinations_fields| %>
+    <div class="form-group">
+      <%= destinations_fields.label :name, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= destinations_fields.text_field :name, :class => 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= destinations_fields.label :url, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= destinations_fields.text_field :url, :class => 'form-control'  %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-lg-2" >Select sources</label>
+      <div class="col-lg-10">
+        <%= f.collection_check_boxes :source_ids, Source.all, :id, :name %>
+      </div>
+    </div>
+    <% end %>
+
+      <%= f.fields_for :sources, @linkset.sources.build do |sources_fields| %>
+      <div class="form-group">
+        <%= sources_fields.label :name, :class => 'control-label col-lg-2' %>
+        <div class="col-lg-10">
+          <%= sources_fields.text_field :name, :class => 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= sources_fields.label :medium, :class => 'control-label col-lg-2' %>
+        <div class="col-lg-10">
+          <%= sources_fields.text_field :medium, :class => 'form-control'  %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= sources_fields.label :url, :class => 'control-label col-lg-2' %>
+        <div class="col-lg-10">
+          <%= sources_fields.text_field :url, :class => 'form-control'  %>
+        </div>
+      </div>
+
+
+    <% end %>
+    <%= f.hidden_field :campaign_id %>
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">

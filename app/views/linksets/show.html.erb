@@ -24,6 +24,11 @@
 <%= link_to 'Edit Linkset Sources', sources_linkset_path(id: @linkset.id),
               :class => 'btn btn-default' %>
 
+<h3>Links</h3>
+<%= render 'linksets/links', sources: @linkset.sources, destinations: @linkset.destinations %>
+<br />
+<br />
+
 <%= link_to t('.back', :default => t("helpers.links.back")),
               tenant_campaign_path(@linkset.campaign.tenant_id, @linkset.campaign_id), :class => 'btn btn-default'  %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),

@@ -1,8 +1,6 @@
 class LinksetsController < ApplicationController
   before_action :set_linkset, only: [:show, :edit, :update, :destroy, :add_destination, :destinations, :add_source, :sources]
 
-
-
   # GET /linksets
   # GET /linksets.json
   def index
@@ -108,6 +106,6 @@ class LinksetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def linkset_params
-      params.require(:linkset).permit(:name, :campaign_id)
+      params.require(:linkset).permit(:name, :campaign_id, destination_ids:[], destinations_attributes: [:name, :url], source_ids:[], sources_attributes: [:name, :medium, :url])
     end
 end

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+  resources :user_campaigns
   resources :source_linksets
   resources :sources
   resources :destination_linksets
@@ -13,7 +14,10 @@ Rails.application.routes.draw do
   end
 
   resources :tenants do
-    resources :campaigns
+    resources :campaigns do
+      get 'users', on: :member
+      put 'add_user', on: :member
+    end
   end
 
   resources :members

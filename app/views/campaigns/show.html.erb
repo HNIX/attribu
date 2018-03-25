@@ -27,6 +27,7 @@
 <%= link_to '< Back to Organization Home', root_path, :class => 'btn btn-default' %>
 
 <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_tenant_campaign_path(campaign: @campaign, tenant: @campaign.tenant_id), :class => 'btn btn-default' %>
+<%= link_to 'Edit Campaign Users',users_tenant_campaign_path(tenant_id: @campaign.tenant_id, id: @campaign.id), :class => 'btn btn-default' %>
 
 <%= link_to t('.destroy', :default => t("helpers.links.destroy")), tenant_campaign_path(@campaign, @campaign.tenant_id),
       :method => 'delete',
