@@ -1,7 +1,7 @@
 class Campaign < ApplicationRecord
   belongs_to :tenant
   has_many :linksets, dependent: :destroy
-  has_many :user_campaigns
+  has_many :user_campaigns, dependent: :destroy
   has_many :users, through: :user_campaigns
 
   validates_uniqueness_of :title

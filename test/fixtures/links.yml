@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  domain: MyString
+  source: MyString
+  campaign: MyString
+  medium: MyString
+  linkset: one
+  destination_linkset: one
+  source_linkset: one
+
+two:
+  domain: MyString
+  source: MyString
+  campaign: MyString
+  medium: MyString
+  linkset: two
+  destination_linkset: two
+  source_linkset: two

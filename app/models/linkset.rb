@@ -4,13 +4,15 @@ class Linkset < ApplicationRecord
   validates_presence_of :name
   validates_uniqueness_of :name
 
-  has_many :destination_linksets
+  has_many :destination_linksets, dependent: :destroy
   has_many :destinations, through: :destination_linksets
   accepts_nested_attributes_for :destinations
 
-  has_many :source_linksets
+  has_many :source_linksets, dependent: :destroy
   has_many :sources, through: :source_linksets
   accepts_nested_attributes_for :sources
+
+  has_many :links, dependent: :destroy
 
 
   def destinations_attributes=(destination_attributes)

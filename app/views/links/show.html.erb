@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Domain:</strong>
+  <%= @link.domain %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @link.source %>
+</p>
+
+<p>
+  <strong>Campaign:</strong>
+  <%= @link.campaign %>
+</p>
+
+<p>
+  <strong>Medium:</strong>
+  <%= @link.medium %>
+</p>
+
+<p>
+  <strong>Linkset:</strong>
+  <%= @link.linkset %>
+</p>
+
+<p>
+  <strong>Destination linkset:</strong>
+  <%= @link.destination_linkset %>
+</p>
+
+<p>
+  <strong>Source linkset:</strong>
+  <%= @link.source_linkset %>
+</p>
+
+<%= link_to 'Edit', edit_link_path(@link) %> |
+<%= link_to 'Back', links_path %>

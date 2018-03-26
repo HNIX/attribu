@@ -1,6 +1,6 @@
 class LinksetsController < ApplicationController
-  before_action :set_linkset, only: [:show, :edit, :update, :destroy, :add_destination, :destinations, :add_source, :sources]
-
+  before_action :set_linkset, only: [:show, :edit, :update, :destroy, :add_destination, :destinations, :add_source, :sources, :create_links]
+  after_action :create_links, only: [:update, :add_destination, :add_source]
   # GET /linksets
   # GET /linksets.json
   def index
@@ -92,6 +92,20 @@ class LinksetsController < ApplicationController
       else
         format.html { redirect_to linkset_url(id: @linkset.id),
         error: 'Source was not added to linkset' }
+      end
+    end
+  end
+
+  def create_links
+    @linkset.destination_linksets.each do |destination_linkset|
+      @linkset.source_linksets.each do |source_linkset|
+        @link = Link.where(destination_linkset_id: destination_linkset.id, linkset_id: @linkset.id, source_linkset_id: source_linkset.id).first_or_create do |link|
+          link.domain = destination_linkset.destination.url
+          link.source = source_linkset.source.name
+          link.medium = source_linkset.source.medium
+          link.campaign = @linkset.campaign.title
+        end
+        @link.save
       end
     end
   end

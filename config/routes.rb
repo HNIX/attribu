@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+  resources :links
   resources :user_campaigns
   resources :source_linksets
   resources :sources

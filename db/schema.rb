@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180324215107) do
+ActiveRecord::Schema.define(version: 20180325235518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,23 @@ ActiveRecord::Schema.define(version: 20180324215107) do
     t.datetime "updated_at", null: false
     t.bigint "tenant_id"
     t.index ["tenant_id"], name: "index_destinations_on_tenant_id"
+  end
+
+  create_table "links", force: :cascade do |t|
+    t.string "domain"
+    t.string "source"
+    t.string "campaign"
+    t.string "medium"
+    t.bigint "linkset_id"
+    t.bigint "destination_linkset_id"
+    t.bigint "source_linkset_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "tenant_id"
+    t.index ["destination_linkset_id"], name: "index_links_on_destination_linkset_id"
+    t.index ["linkset_id"], name: "index_links_on_linkset_id"
+    t.index ["source_linkset_id"], name: "index_links_on_source_linkset_id"
+    t.index ["tenant_id"], name: "index_links_on_tenant_id"
   end
 
   create_table "linksets", force: :cascade do |t|
@@ -156,6 +173,10 @@ ActiveRecord::Schema.define(version: 20180324215107) do
   add_foreign_key "campaigns", "tenants"
   add_foreign_key "destination_linksets", "destinations"
   add_foreign_key "destination_linksets", "linksets"
+  add_foreign_key "links", "destination_linksets"
+  add_foreign_key "links", "linksets"
+  add_foreign_key "links", "source_linksets"
+  add_foreign_key "links", "tenants"
   add_foreign_key "linksets", "campaigns"
   add_foreign_key "members", "tenants"
   add_foreign_key "members", "users"

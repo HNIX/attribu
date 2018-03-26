@@ -1,0 +1,52 @@
+<%= form_with(model: link, local: true) do |form| %>
+  <% if link.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(link.errors.count, "error") %> prohibited this link from being saved:</h2>
+
+      <ul>
+      <% link.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :domain %>
+    <%= form.text_field :domain, id: :link_domain %>
+  </div>
+
+  <div class="field">
+    <%= form.label :source %>
+    <%= form.text_field :source, id: :link_source %>
+  </div>
+
+  <div class="field">
+    <%= form.label :campaign %>
+    <%= form.text_field :campaign, id: :link_campaign %>
+  </div>
+
+  <div class="field">
+    <%= form.label :medium %>
+    <%= form.text_field :medium, id: :link_medium %>
+  </div>
+
+  <div class="field">
+    <%= form.label :linkset_id %>
+    <%= form.text_field :linkset_id, id: :link_linkset_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :destination_linkset_id %>
+    <%= form.text_field :destination_linkset_id, id: :link_destination_linkset_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :source_linkset_id %>
+    <%= form.text_field :source_linkset_id, id: :link_source_linkset_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

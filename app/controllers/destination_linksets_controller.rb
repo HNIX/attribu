@@ -1,6 +1,5 @@
 class DestinationLinksetsController < ApplicationController
   before_action :set_destination_linkset, only: [:show, :edit, :update, :destroy]
-
   # GET /destination_linksets
   # GET /destination_linksets.json
   def index
@@ -63,6 +62,7 @@ class DestinationLinksetsController < ApplicationController
 
     end
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
