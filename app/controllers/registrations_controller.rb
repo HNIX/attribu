@@ -90,7 +90,7 @@ class RegistrationsController < Milia::RegistrationsController
   # ------------------------------------------------------------------------------
   # ------------------------------------------------------------------------------
     def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up) + ::Milia.whitelist_user_params
+      devise_parameter_sanitizer.permit(:sign_up)
     end
 
   # ------------------------------------------------------------------------------
@@ -102,9 +102,8 @@ class RegistrationsController < Milia::RegistrationsController
   # ------------------------------------------------------------------------------
   # ------------------------------------------------------------------------------
     def sign_up_params_user()
-      params.require(:user).permit( ::Milia.whitelist_user_params )
+      params.require(:user).permit(:email,:password, :password_confirmation,:tenant_attributes => [:name, :plan],:payment_attributes =>[:card_number, :card_cvv, :card_expires_month, :card_expires_year] )
     end
-
   # ------------------------------------------------------------------------------
   # sign_up_params_coupon -- permit coupon parameter if used; else params
   # ------------------------------------------------------------------------------
