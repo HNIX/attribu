@@ -1,5 +1,5 @@
 Rails.application.configure do
-   
+
   # devise says to define default url
   config.action_mailer.default_url_options = { :host => 'secure.simple-milia-app.com', :protocol => 'https' }
 
@@ -39,7 +39,7 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  config.assets.js_compressor = Uglifier.new(harmony: true)
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
