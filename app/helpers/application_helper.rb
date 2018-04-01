@@ -69,7 +69,6 @@ module ApplicationHelper
     attributedLink = tempParts.join("#")
 
     return attributedLink
-
   end
 
   def count_destinations(linksets)

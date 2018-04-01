@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180325235518) do
+ActiveRecord::Schema.define(version: 20180401160228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,22 @@ ActiveRecord::Schema.define(version: 20180325235518) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
+  create_table "shortened_urls", force: :cascade do |t|
+    t.integer "owner_id"
+    t.string "owner_type", limit: 20
+    t.text "url", null: false
+    t.string "unique_key", limit: 10, null: false
+    t.integer "use_count", default: 0, null: false
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "tenant_id"
+    t.index ["owner_id", "owner_type"], name: "index_shortened_urls_on_owner_id_and_owner_type"
+    t.index ["tenant_id"], name: "index_shortened_urls_on_tenant_id"
+    t.index ["unique_key"], name: "index_shortened_urls_on_unique_key", unique: true
+    t.index ["url"], name: "index_shortened_urls_on_url"
+  end
+
   create_table "source_linksets", force: :cascade do |t|
     t.bigint "linkset_id"
     t.bigint "source_id"
@@ -181,6 +197,7 @@ ActiveRecord::Schema.define(version: 20180325235518) do
   add_foreign_key "members", "tenants"
   add_foreign_key "members", "users"
   add_foreign_key "payments", "tenants"
+  add_foreign_key "shortened_urls", "tenants"
   add_foreign_key "source_linksets", "linksets"
   add_foreign_key "source_linksets", "sources"
   add_foreign_key "tenants", "tenants"

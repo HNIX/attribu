@@ -23,7 +23,8 @@ Rails.application.routes.draw do
 
   resources :members
   get 'home/index'
-
+  get '/:id' => "shortener/shortened_urls#show"
+  
   root :to => "home#index"
 
 

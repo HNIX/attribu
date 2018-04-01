@@ -3,4 +3,5 @@ class Link < ApplicationRecord
   belongs_to :linkset
   belongs_to :destination_linkset
   belongs_to :source_linkset
+  has_shortened_urls
 end

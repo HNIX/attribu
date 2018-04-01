@@ -26,6 +26,7 @@ gem 'stripe'
 gem 'simple-line-icons-rails'
 gem 'material_icons'
 gem "font-awesome-rails"
+gem 'shortener'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

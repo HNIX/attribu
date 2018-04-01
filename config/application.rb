@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 module Attribu
   class Application < Rails::Application
-     
+
     # uncomment to ensure a common layout for devise forms
     #   config.to_prepare do   # Devise
     #     Devise::SessionsController.layout "sign"
@@ -16,6 +16,7 @@ module Attribu
     #     Devise::ConfirmationsController.layout "sign"
     #     Devise::PasswordsController.layout "sign"
     #   end   # Devise
+    config.assets.initialize_on_precompile = false
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
