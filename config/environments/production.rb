@@ -1,18 +1,11 @@
 Rails.application.configure do
 
   # devise says to define default url
-  config.action_mailer.default_url_options = { :host => 'secure.simple-milia-app.com', :protocol => 'https' }
+  config.action_mailer.delivery_method = :smtp
 
-  ActionMailer::Base.delivery_method = :smtp
+  config.action_mailer.default_url_options = { :host => 'attribu.herokuapp.com', :protocol => 'https'}
 
-  ActionMailer::Base.smtp_settings = {
-    :address        => 'smtp.sendgrid.net',
-    :port           => '587',
-    :authentication => :plain,
-    :user_name      => ENV['SENDGRID_USERNAME'],
-    :password       => ENV['SENDGRID_PASSWORD'],
-    :domain         => 'heroku.com'
-  }
+
 
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -87,18 +80,6 @@ Rails.application.configure do
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
-
-  config.action_mailer.smtp_settings = {
-    :address => "smtp.gmail.com",
-    :port => "587",
-    :authentication => :plain,
-    :user_name => ENV["GMAIL_USERNAME"],
-    :password => ENV["SMTP_ENTRY"],
-    :enable_starttls_auto => true
-  }
-  # ActionMailer Config
-  config.action_mailer.default_url_options = { :host => 'attribu.heroku.com' }
-  config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
 
