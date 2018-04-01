@@ -7,65 +7,43 @@
 </div>
 
 <% if @campaigns.size > 0 %>
+<% @campaigns.each do |campaign| %>
 
-<table class="table table-striped">
+<!-- Feed item with featured image -->
+<div class="post-item animated preFadeInLeft fadeInLeft">
+    <!-- <div class="is-flex is-start is-vcenter padding-10">
+        <div class="item-title">Created by <a href="#" class="ml-5"><%= campaign.users.first.email %></a> <br><span class="feed-time-small"><%= time_ago_in_words(campaign.created_at) %></span></div>
+    </div> -->
+    <div class="is-flex is-start is-vcenter">
+        <p>
+            <span class="post-title"><%= link_to campaign.title, tenant_campaign_path(campaign, tenant_id: @tenant.id), class: 'main-link' %></span>
+            <br><%= campaign.description %>
+        </p>
+    </div>
 
-  <thead>
+    <div class="is-flex is-start is-vcenter padding-10">
 
-    <tr>
+        <div class="is-flex is-start is-vcenter feed-item-footer">
+            <div class="counter-block">
+                <span class="fa fa-globe"></span>
+                <div class="rating-counter small"><%= count_sources(campaign.linksets) %></div>
+            </div>
+            <div class="counter-block">
+                <span class="fa fa-link"></span>
+                <div class="rating-counter small"><%= count_links(campaign.linksets) %></div>
+            </div>
+            <div class="counter-block">
+                <span class="fa fa-bullseye"></span>
+                <div class="rating-counter small"><%= count_destinations(campaign.linksets) %></div>
+            </div>
+        </div>
 
-      <th><%= model_class.human_attribute_name(:title) %></th>
+    </div>
 
-      <th><%= model_class.human_attribute_name(:description) %></th>
+</div>
+<!-- Feed item with featured image -->
 
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-
-    </tr>
-
-  </thead>
-
-  <tbody>
-
-    <% @campaigns.each do |campaign| %>
-
-    <tr>
-
-      <td><%= link_to campaign.title,
-
-      tenant_campaign_path(campaign, tenant_id: @tenant.id), class: 'main-link' %></td>
-
-      <td><%= campaign.description %></td>
-
-      <td>
-
-        <%= link_to t('.edit', :default => t("helpers.links.edit")),
-
-        edit_tenant_campaign_path(campaign, tenant_id: @tenant.id), :class => 'btn btn-default btn-xs' %>
-        <%= link_to 'Edit Users', users_tenant_campaign_path(campaign, tenant_id: @tenant.id), :class => 'btn btn-default btn-xs' %>
-
-
-        <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-
-        tenant_campaign_path(campaign, tenant_id: @tenant.id),
-
-        :method => :delete,
-
-        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm",
-
-          :default => 'Are you sure?')) },
-
-          :class => 'btn btn-xs btn-danger' %>
-
-        </td>
-
-      </tr>
-
-      <% end %>
-
-    </tbody>
-
-  </table>
-
+<% end %>
 <% else %>
 
 <p class="lead">You don't have any campaigns</p>
@@ -78,6 +56,6 @@
 
     <%= link_to 'New Campaign',
     new_tenant_campaign_path(tenant_id: @tenant.id),
-    :class => 'btn btn-primary' %>
+    :class => 'button btn-dash secondary-btn is-raised is-fullwidth rounded no-lh' %>
 
   <% end %>

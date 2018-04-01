@@ -1,4 +1,5 @@
 class Campaign < ApplicationRecord
+
   belongs_to :tenant
   has_many :linksets, dependent: :destroy
   has_many :user_campaigns, dependent: :destroy

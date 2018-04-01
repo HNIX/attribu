@@ -1,1 +1,48 @@
-<%= render 'destinations/list', destinations: @destinations %>
+<!-- Support tickets widget -->
+<div class="column is-5">
+    <div class="flex-card light-bordered light-raised">
+        <h3 class="card-heading has-icon no-margin">New Destination</h3>
+
+        <div class="card-body is-responsive">
+            <%= render 'form' %>
+        </div>
+    </div>
+</div>
+<!-- Support tickets widget -->
+<!-- User table widget -->
+<div class="column is-7 is-hidden-mobile">
+    <div class="flex-card light-bordered light-raised">
+        <h3 class="card-heading has-icon">Destinations</i></h3>
+        <table class="table hire-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Created</th>
+                    <th>Linksets</th>
+                    <th>Sources</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+              <% @destinations.each do |destination| %>
+
+                <tr>
+                    <td></td>
+                    <td><%= link_to destination.name, destination_path(destination), class: 'main-link' %></td>
+                    <td class="position"><%= time_ago_in_words(destination.created_at) %> ago</td>
+                    <td class="experience"><%= destination.linksets.count %></span></td>
+                    <td>
+                      <% destination.linksets.each do |linkset| %>
+                        <%= linkset.sources.count %>
+                      <% end %>
+                    </td>
+                    <td><%= link_to "Edit", edit_destination_path(destination), class: "button is-small btn-align accent-btn raised rounded btn-outlined" %></td>
+                </tr>
+                <% end %>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- /User table widget -->

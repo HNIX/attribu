@@ -1,10 +1,13 @@
 class DestinationsController < ApplicationController
+
   before_action :set_destination, only: [:show, :edit, :update, :destroy]
+
 
   # GET /destinations
   # GET /destinations.json
   def index
     @destinations = Destination.all
+    @destination = Destination.new
   end
 
   # GET /destinations/1

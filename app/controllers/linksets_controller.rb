@@ -1,6 +1,8 @@
 class LinksetsController < ApplicationController
+  layout "profile", only: [:show]
+
   before_action :set_linkset, only: [:show, :edit, :update, :destroy, :add_destination, :destinations, :add_source, :sources, :create_links]
-  after_action :create_links, only: [:update, :add_destination, :add_source]
+  after_action :create_links, only: [:create, :update, :add_destination, :add_source]
   # GET /linksets
   # GET /linksets.json
   def index
@@ -29,7 +31,8 @@ class LinksetsController < ApplicationController
 
     respond_to do |format|
       if @linkset.save
-        format.html { redirect_to tenant_campaign_url(tenant_id: Tenant.current_tenant_id, id: @linkset.campaign_id), notice: 'Linkset was successfully created.' }
+        format.html { redirect_to @linkset, notice: 'Linkset was successfully created.' }
+        format.json { render :show, status: :created, location: @linkset}
       else
         format.html { render :new }
         format.json { render json: @linkset.errors, status: :unprocessable_entity }
@@ -99,12 +102,7 @@ class LinksetsController < ApplicationController
   def create_links
     @linkset.destination_linksets.each do |destination_linkset|
       @linkset.source_linksets.each do |source_linkset|
-        @link = Link.where(destination_linkset_id: destination_linkset.id, linkset_id: @linkset.id, source_linkset_id: source_linkset.id).first_or_create do |link|
-          link.domain = destination_linkset.destination.url
-          link.source = source_linkset.source.name
-          link.medium = source_linkset.source.medium
-          link.campaign = @linkset.campaign.title
-        end
+        @link = Link.where(destination_linkset_id: destination_linkset.id, linkset_id: @linkset.id, source_linkset_id: source_linkset.id).first_or_create
         @link.save
       end
     end

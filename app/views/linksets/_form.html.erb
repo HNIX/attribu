@@ -1,86 +1,95 @@
 <%= form_for @linkset, :html => { :class => "form-horizontal linkset" } do |f| %>
 
-  <% if @linkset.errors.any? %>
-    <div id="error_expl" class="panel panel-danger">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%= pluralize(@linkset.errors.count, "error") %> prohibited this linkset from being saved:</h3>
+<div class="columns">
+    <% if @linkset.errors.any? %>
+      <div id="error_expl" class="panel panel-danger">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= pluralize(@linkset.errors.count, "error") %> prohibited this linkset from being saved:</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+          <% @linkset.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
       </div>
-      <div class="panel-body">
-        <ul>
-        <% @linkset.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
-      </div>
-    </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= f.label :name, :class => 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.text_field :name, :class => 'form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-lg-2" >Select destinations</label>
-    <div class="col-lg-10">
-      <%= f.collection_check_boxes :destination_ids, Destination.all, :id, :name %>
-    </div>
-  </div>
-
-    <%= f.fields_for :destinations, @linkset.destinations.build do |destinations_fields| %>
-    <div class="form-group">
-      <%= destinations_fields.label :name, :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= destinations_fields.text_field :name, :class => 'form-control' %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= destinations_fields.label :url, :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= destinations_fields.text_field :url, :class => 'form-control'  %>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="control-label col-lg-2" >Select sources</label>
-      <div class="col-lg-10">
-        <%= f.collection_check_boxes :source_ids, Source.all, :id, :name %>
-      </div>
-    </div>
     <% end %>
+      <div class="column is-12">
+          <div class="control-material is-secondary has-icon">
+              <%= f.text_field :name, :class => 'material-input' %>
+              <span class="material-highlight"></span>
+              <span class="bar"></span>
+              <%= f.label :name %>
+          </div>
 
-      <%= f.fields_for :sources, @linkset.sources.build do |sources_fields| %>
-      <div class="form-group">
-        <%= sources_fields.label :name, :class => 'control-label col-lg-2' %>
-        <div class="col-lg-10">
-          <%= sources_fields.text_field :name, :class => 'form-control' %>
-        </div>
+
+          <div class="control-material is-secondary">
+            <%= f.label :destinations, "Select Destinations" %>
+            <div class="mt-5"></div>
+              <%= f.select :destinations, Destination.all.collect { |destination| [destination.name, destination.id] }, { include_blank: 'Select Destination' }, class: 'chosen-select' %>
+          </div>
+
+
+          <div style="padding-left: 160px;padding-bottom:20px">
+                <button class="btn btn-primary" onclick="showDestFields()">Log-In</button>
+                <script>
+                    function showDestFields() {
+                        document.getElementById("destinationFields").style.display = "block";
+                    }
+                </script>
+            </div>
+
+          <%= f.fields_for(:destinations, @linkset.destinations.build, style: 'display: none;', id: 'destinationFields') do |destinations_fields| %>
+          <div class="control-material is-secondary has-icon" >
+              <%= destinations_fields.text_field :name, :class => 'material-input' %>
+              <span class="material-highlight"></span>
+              <span class="bar"></span>
+              <%= destinations_fields.label :name %>
+          </div>
+          <div class="control-material is-secondary has-icon">
+              <%= destinations_fields.text_field :url, :class => 'material-input' %>
+              <span class="material-highlight"></span>
+              <span class="bar"></span>
+              <%= destinations_fields.label :url %>
+          </div>
+
+          <% end %>
+          <div class="control-material is-secondary has-icon">
+              <%= f.collection_check_boxes :source_ids, Source.all, :id, :name %>
+              <span class="material-highlight"></span>
+              <span class="bar"></span>
+              <label>Sources</label>
+          </div>
+
+          <%= f.fields_for :sources, @linkset.sources.build do |sources_fields| %>
+          <div class="control-material is-secondary has-icon">
+              <%= sources_fields.text_field :name, :class => 'material-input' %>
+              <span class="material-highlight"></span>
+              <span class="bar"></span>
+              <%= sources_fields.label :name %>
+          </div>
+          <div class="control-material is-secondary has-icon">
+              <%= sources_fields.text_field :url, :class => 'material-input' %>
+              <span class="material-highlight"></span>
+              <span class="bar"></span>
+              <%= sources_fields.label :url %>
+          </div>
+          <div class="control-material is-secondary has-icon">
+              <%= sources_fields.text_field :medium, :class => 'material-input' %>
+              <span class="material-highlight"></span>
+              <span class="bar"></span>
+              <%= sources_fields.label :medium %>
+          </div>
+          <% end %>
+<%= f.hidden_field :campaign_id %>
+
+
+          <div class="has-text-centered mt-30">
+            <%= f.submit nil, :class => 'button btn-dash secondary-btn is-raised is-fullwidth rounded no-lh' %>
+          </div>
       </div>
-      <div class="form-group">
-        <%= sources_fields.label :medium, :class => 'control-label col-lg-2' %>
-        <div class="col-lg-10">
-          <%= sources_fields.text_field :medium, :class => 'form-control'  %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= sources_fields.label :url, :class => 'control-label col-lg-2' %>
-        <div class="col-lg-10">
-          <%= sources_fields.text_field :url, :class => 'form-control'  %>
-        </div>
-      </div>
 
-
-    <% end %>
-    <%= f.hidden_field :campaign_id %>
-
-  <div class="form-group">
-    <div class="col-lg-offset-2 col-lg-10">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-            tenant_campaign_path(tenant_id: Tenant.current_tenant_id,
-            id: @linkset.campaign_id), :class => 'btn btn-default' %>
-    </div>
   </div>
 
 <% end %>

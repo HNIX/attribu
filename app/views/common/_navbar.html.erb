@@ -1,63 +1,89 @@
-<div class="navbar navbar-default navbar-static-top">
-  <div class="container">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <span>
-      <%= link_to ("<i class='fa fa-rocket'></i> " +'Attribu').html_safe, root_path, class: "navbar-brand" %>
-    <span>
-    <div class="navbar-collapse collapse navbar-responsive-collapse">
-      <ul class="nav navbar-nav">
-        <% if current_user && current_user.is_admin? %>
+<!-- Top Navbar -->
+<nav class="nav dashboard-nav has-shadow">
+    <div class="container is-fluid">
+        <!-- Nav left -->
+        <div class="nav-left">
+            <!-- Logout button -->
+            <% if current_user %>
 
-        <li>
+            <% else %>
+            <div class="nav-item nav-icon logout-button">
+                <%= link_to new_user_session_path do %>
+                <i class="sl sl-icon-power"></i>
+                <% end %>
+            </div>
+            <% end %>
+            <!-- /Logout button -->
 
-          <%= link_to "<i class='fa fa-users'></i> Add Members".html_safe,
+            <!-- Reader mode switch -->
+            <div class="nav-item reader-switch is-hidden-desktop is-hidden-tablet">
+                <div class="field">
+                    <input id="reader-mode-switch" type="checkbox" name="reader-mode-switch" class="switch is-outlined is-primary is-small">
+                    <label id="reader-mode-toggle" for="reader-mode-switch"></label>
+                </div>
+            </div>
+            <!-- Reader mode switch -->
 
-          new_member_path,
+            <!-- Quick search (hidden on mobile) -->
+            <div class="nav-item">
+                <div class="field is-hidden-mobile">
+                    <div class="searchbox control has-icons-left">
+                        <input class="input is-secondary-focus" type="text" placeholder="Quick search">
+                        <span class="icon is-left">
+                            <i class="sl sl-icon-magnifier"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- /Quick search -->
 
-          class: 'navbar-link btn btn-primary' %>
+            <!-- Global search (visible on mobile only) -->
+            <div class="nav-item nav-icon search-icon modal-trigger is-hidden-desktop is-hidden-tablet" data-modal="search-modal">
+                <i class="sl sl-icon-magnifier"></i>
+            </div>
+            <!-- /Global search -->
 
-        </li>
-        <li>
+            <!-- Right sidebar trigger (visible on mobile only)  -->
+            <div class="nav-item nav-icon chat-button is-hidden-desktop is-hidden-tablet" data-show="quickview" data-target="main-quickview">
+                <i class="im im-icon-Speach-Bubble11"></i>
+            </div>
+            <!-- /Right sidebar trigger -->
+        </div>
+        <!-- /Nav left -->
 
-          <%= link_to "<i class='fa fa-briefcase'></i> Change Plan".html_safe,
+        <!-- Nav right -->
+        <div class="nav-right nav-menu">
+            <!-- Admin options (hidden on mobile) -->
+            
+            <% if current_user %>
 
-          edit_plan_path,
-
-          class: 'btn btn-primary navbar-link' %>
-
-        </li>
-
-        <% end %>
-      </ul>
-      <ul class="nav navbar-right col-md-4">
-
-        <% if current_user %>
-
-        <li class="col-md-8 user-name">
-
-          <%= link_to ('<i class="fa fa-user"></i> ' + truncate(current_user.email, length: 25)).html_safe, edit_user_registration_path, title: 'Edit Profile' %>
-
-        </li>
-
-        <li class="col-md-1"> </li>
-
-        <li class="col-md-3 logout"><%= link_to('Logout', destroy_user_session_path, class: 'btn btn-xs btn-danger', title: 'Logout', :method => :delete) %></li>
-
-        <% else %>
-
-        <li class="col-md-4 pull-right">
-
-          <%= link_to('Sign In', new_user_session_path, class: 'btn btn-primary', title: 'Sign In') %>
-
-        </li>
-
-        <% end %>
-
-      </ul>
+          <div class="collapse navbar-collapse" id="nav-collapse">
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <!-- The Profile picture inserted via div class below, with shaping provided by Bootstrap -->
+                        <div class="img-rounded profile-img"></div>
+                        <%= current_user.email %> <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                          <%= link_to edit_user_registration_path, class: "profile-trigger" do %>
+                              <img class="main-menu-avatar" src="https://place-hold.it/250x250" alt="">
+                              <span class="dot"></span>
+                          <% end %>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+            <% end %>
+            <!-- /admin options -->
+        </div>
+        <!-- /Nav right -->
     </div>
-  </div>
-</div>
+</nav>
+<!-- /Top Navbar -->

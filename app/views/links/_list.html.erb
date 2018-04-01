@@ -1,35 +1,67 @@
 <%- model_class = Link -%>
 
-<% if links.size > 0 %>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:domain) %></th>
-      <th><%= model_class.human_attribute_name(:source) %></th>
-      <th><%= model_class.human_attribute_name(:medium) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-  <% links.each do |link| %>
-  <tr>
-    <td><%= link_to link.domain, link_path(link), class: 'main-link' %></td>
-    <td><%= link.source %></td>
-    <td><%= link.medium %></td>
-    <td>
-    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-    link_path(link),
-    :method => :delete,
-    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-    :class => 'btn btn-xs btn-danger' %>
-  </td>
-</tr>
-<% end %>
-</tbody>
-</table>
+<!-- Profile notifications -->
+<div id="profile-notifications" >
+    <div class="columns">
+        <div class="column is-10 is-offset-1">
+            <div class="flex-card is-top light-bordered raised animated preFadeInUp fadeInUp">
+                <div class="title is-3 padding-20">Links</div>
+                <div class="card-body">
+                    <% if links.size > 0 %>
+                    <ol class="notifications-center">
+                        <!-- Notification item -->
+                        <% links.each do |link| %>
+                        <li>
+                            <div class="icon is-hidden-mobile">
+                                <i class="fa fa-link"></i>
+                            </div>
+                            <div class="description">
+                                <b>Link to:</b> <%= link.destination_linkset.destination.url %> <br/>
+                                <b>From:</b> <%= link.source_linkset.source.name %>, <%= link.source_linkset.source.medium %>
+                            </div>
+                            <div class="controls is-hidden-mobile">
+                              <script>
+                              var clipboard = new ClipboardJS('.btn');
 
-<% else %>
+                                  clipboard.on('success', function(e) {
+                                    console.info('Action:', e.action);
+                                    console.info('Text:', e.text);
+                                    console.info('Trigger:', e.trigger);
+                                    e.clearSelection();
+                                  });
 
-<p class="lead">You don't have any links</p>
+                                  clipboard.on('error', function(e) {
+                                    console.error('Action:', e.action);
+                                    console.error('Trigger:', e.trigger);
+                                  });
+                                </script>
+                              <!-- Target -->
+                              <div class="field">
 
-<% end %>
+                                    <input id="attrLink<%= link.id %>" class="input is-disabled" type="text" placeholder="Disabled input" value="<%= generate_atrributed_link(link) %>" >
+                            </div>
+
+<!-- Trigger -->
+<button class="btn icon" data-clipboard-target="#attrLink<%= link.id %>">
+  <i class="fa fa-clone"></i>
+</button>
+                            </div>
+                        </li>
+                        <% end %>
+                        <!-- Notification item -->
+                    </ol>
+                    <!-- Load more -->
+                    <div class="has-text-centered mt-40">
+                        <button class="button btn-dash is-raised accent-btn rounded ripple no-lh">Load more</button>
+                    </div>
+                    <% else %>
+
+                    <p class="lead">You don't have any links</p>
+
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Profile notifications -->

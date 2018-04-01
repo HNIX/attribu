@@ -1,23 +1,73 @@
 <%- model_class = Source -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+
+<div class="column is-5">
+  <div class="page-header">
+
+    <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+
+  </div>
+  <div class="stats-card flex-card light-bordered light-raised">
+      <div class="img-header">
+        <div class="header-control ml-auto is-drop drop-sm">
+            <i class="sl sl-icon-arrow-down"></i>
+            <div class="dropContain">
+                <div class="dropOut">
+                    <ul>
+                        <li><i class="drop-icon sl sl-icon-refresh"></i> Reload</li>
+                        <li><%= link_to source_path(@source),
+                        :method => :delete,
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) } do %><i class="drop-icon sl sl-icon-printer"></i> Archive<% end %></li>
+                        <li><%= link_to edit_source_path(@source) do %><i class="drop-icon sl sl-icon-settings"></i> Settings<% end %></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+          <div class="img-block has-text-centered">
+              <div><img src="https://place-hold.it/250x250" alt=""></div>
+              <div class="name"><%= link_to @source.name, source_path(@source), class: 'main-link' %></div>
+              <div class="name-details"><%= @source.medium %></div>
+          </div>
+      </div>
+      <div class="card-body">
+          <div class="inline-stats has-text-centered">
+              <div class="stats-item">
+                  <div class="stat-name">
+                      Link Sets
+                  </div>
+                  <div class="stat-data">
+                      <%= @source.source_linksets.count %>
+                  </div>
+              </div>
+              <div class="stats-item">
+                  <div class="stat-name">
+                      Destinations
+                  </div>
+                  <div class="stat-data">
+                      <%= count_destinations(@source.linksets) %>
+                  </div>
+              </div>
+              <div class="stats-item">
+                  <div class="stat-name">
+                      Links
+                  </div>
+                  <div class="stat-data">
+                      <%= count_links(@source.linksets) %>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+  <div id="linechart-card" class="flex-card light-bordered card-overflow light-raised">
+      <h3 class="card-heading is-absolute">Link Activity</h3>
+
+      <canvas id="lineChart" width="400" height="300"></canvas>
+  </div>
 </div>
-
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @source.name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:medium) %>:</strong></dt>
-  <dd><%= @source.medium %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:url) %>:</strong></dt>
-  <dd><%= @source.url %></dd>
-</dl>
-
-<%= link_to t('.back', :default => t("helpers.links.back")),
-              sources_path, :class => 'btn btn-default'  %>
-<%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_source_path(@source), :class => 'btn btn-default' %>
-<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              source_path(@source),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+<div class="column is-4">
+  <%= render 'sources/social_metro' %>
+</div>
+<div class="column is-3">
+  <%= render 'common/activity_feed' %>
+</div>

@@ -1,0 +1,72 @@
+<!-- Child push sidebar menu -->
+<nav class="child-menu">
+    <div class="child-menu-inner">
+        <!-- Child menu header -->
+        <ul>
+            <li class="child-header">
+                <div class="sidebar-title">attribu</div>
+                <a id="close-child-menu" href="#" class="menu-wrapper">
+                    <span class="icon-box-toggle ef-4">
+                        <span class="rotate">
+                            <i class="icon-line-top">  	 </i>
+                            <i class="icon-line-center">  </i>
+                            <i class="icon-line-bottom">  </i>
+                        </span>
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <!-- /Child menu header -->
+        <!-- Sidebar menu 4 -->
+        <ul id="misc-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
+            <li class="have-children"><a class="parent-link" href="#"><span class="material-icons">grid_on</span>Campaigns</a>
+                <ul>
+                  <% Campaign.all.each do |campaign| %>
+                    <li><%= link_to campaign.title, tenant_campaign_path(campaign, tenant_id: campaign.tenant.id) %></li>
+                  <% end %>
+                </ul>
+
+            </li>
+            <li class="have-children"><a class="parent-link" href="#"><span class="material-icons">speaker_notes</span>Destinations</a>
+                <ul>
+                  <% Destination.all.each do |destination| %>
+                    <li><%= link_to destination.name, destination_path(destination) %></li>
+                  <% end %>
+                </ul>
+            </li>
+            <li class="have-children"><a class="parent-link" href="#"><span class="material-icons">thumbs_up_down</span>Sources</a>
+              <ul>
+                <% Source.all.each do |source| %>
+                  <li><%= link_to source.name, source_path(source) %></li>
+                <% end %>
+              </ul>
+            </li>
+
+        </ul>
+        <!-- /Sidebar menu 4 -->
+
+        <!-- Sidebar menu 5 -->
+        <ul id="settings-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
+            <li class="have-children"><a class="parent-link" href="#"><span class="material-icons">settings</span>Global settings</a>
+                <ul>
+                    <li><a href="javascript:void(0);">Preferences <span class="sl sl-icon-lock warning-text ml-10"></span></a></li>
+                    <li><a href="javascript:void(0);">Change password <span class="sl sl-icon-lock warning-text ml-10"></span></a></li>
+                </ul>
+            </li>
+            <% if current_user && current_user.is_admin? %>
+            <li class="have-children"><a class="parent-link" href="#"><span class="material-icons">account_circle</span>User settings</a>
+                <ul>
+                    <li><%= link_to "Add Members", new_member_path, class: 'nav-item nav-icon nav-inner' %></li>
+                </ul>
+            </li>
+            <li class="have-children"><a class="parent-link" href="#"><span class="material-icons">domain</span>Organizations</a>
+                <ul>
+                    <li><%= link_to "Edit account", edit_plan_path, class: 'nav-item nav-icon nav-inner is-active' %></li>
+                </ul>
+            </li>
+            <% end %>
+        </ul>
+        <!-- /Sidebar menu 5 -->
+    </div>
+</nav>
+<!-- /Child push sidebar menu -->

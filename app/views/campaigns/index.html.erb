@@ -1,7 +1,7 @@
 <!-- Support tickets widget -->
 <div class="column is-5">
     <div class="flex-card light-bordered light-raised">
-        <h3 class="card-heading has-icon no-margin">New Source</h3>
+        <h3 class="card-heading has-icon no-margin">New Campaign </h3>
 
         <div class="card-body is-responsive">
             <%= render 'form' %>
@@ -12,7 +12,7 @@
 <!-- User table widget -->
 <div class="column is-7 is-hidden-mobile">
     <div class="flex-card light-bordered light-raised">
-        <h3 class="card-heading has-icon">Sources</i></h3>
+        <h3 class="card-heading has-icon">Campaigns</i></h3>
         <table class="table hire-table">
             <thead>
                 <tr>
@@ -20,24 +20,26 @@
                     <th>Title</th>
                     <th>Created</th>
                     <th>Linksets</th>
-                    <th>Destinations</th>
+                    <th>Sources</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-              <% @sources.each do |source| %>
+              <% @campaigns.each do |campaign| %>
 
                 <tr>
                     <td></td>
-                    <td><%= link_to source.name, source_path(source), class: 'main-link' %></td>
-                    <td class="position"><%= time_ago_in_words(source.created_at) %> ago</td>
-                    <td class="experience"><%= source.linksets.count %></span></td>
+                    <td><%= link_to campaign.title, tenant_campaign_path(campaign, tenant_id: @tenant.id), class: 'main-link' %></td>
+                    <td class="position"><%= time_ago_in_words(campaign.created_at) %> ago</td>
+                    <td class="experience"><%= campaign.linksets.count %></span></td>
                     <td>
-                      <% source.linksets.each do |linkset| %>
-                        <%= linkset.destinations.count %>
+                      <% campaign.linksets.each do |linkset| %>
+                        <% linkset.sources.each do |source| %>
+                        <span class="tag squared is-info"><%= source.name %></span>
+                        <% end %>
                       <% end %>
                     </td>
-                    <td><%= link_to "Edit", edit_source_path(source), class: "button is-small btn-align accent-btn raised rounded btn-outlined" %></td>
+                    <td><%= link_to "Edit", edit_tenant_campaign_path(campaign, tenant_id: @tenant.id), class: "button is-small btn-align accent-btn raised rounded btn-outlined" %></td>
                 </tr>
                 <% end %>
 

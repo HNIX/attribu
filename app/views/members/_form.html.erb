@@ -1,0 +1,60 @@
+<%= form_for(@member, :html => { :class => "form login" }) do |f| %>
+  <div class="columns">
+    <% if @member.errors.any? %>
+      <div id="error_expl" class="panel panel-danger">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= pluralize(@member.errors.count, "error") %> prohibited this member from being saved:</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+          <% @member.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+    <% if @user.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@user.errors.count, "error") %> prohibited this Member from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+          <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <% end %>
+    <%= fields_for( :user ) do |w| %>
+      <div class="column is-12">
+          <div class="control-material is-secondary has-icon">
+              <%= w.text_field :email, :class => 'material-input' %>
+              <span class="material-highlight"></span>
+              <span class="bar"></span>
+              <%= w.label :email %>
+          </div>
+  <% end %>
+          <div class="control-material is-secondary has-icon">
+              <%= f.text_field :first_name, :class => 'material-input' %>
+              <span class="material-highlight"></span>
+              <span class="bar"></span>
+              <%= f.label :first_name %>
+          </div>
+          <div class="control-material is-secondary has-icon">
+              <%= f.text_field :last_name, :class => 'material-input' %>
+              <span class="material-highlight"></span>
+              <span class="bar"></span>
+              <%= f.label :last_name %>
+          </div>
+
+          <div class="has-text-centered mt-30">
+            <%= f.submit "Create and invite user", :class => 'button btn-dash secondary-btn is-raised is-fullwidth rounded no-lh' %>
+          </div>
+      </div>
+
+
+  </div>
+<% end %>

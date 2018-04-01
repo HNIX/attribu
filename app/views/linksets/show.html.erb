@@ -1,41 +1,238 @@
 <%- model_class = Linkset -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
-</div>
 
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @linkset.name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:campaign_id) %>:</strong></dt>
-  <dd><%= @linkset.campaign_id %></dd>
-</dl>
 
-<h3>Destinations</h3>
-<%= render 'destinations/list', destinations: @linkset.destinations %>
-<br />
-<br />
+<% if false %>
 <%= link_to 'Edit Linkset Destinations', destinations_linkset_path(id: @linkset.id),
               :class => 'btn btn-default' %>
-
-<h3>Sources</h3>
-<%= render 'sources/list', sources: @linkset.sources %>
-<br />
-<br />
 <%= link_to 'Edit Linkset Sources', sources_linkset_path(id: @linkset.id),
               :class => 'btn btn-default' %>
+<% end %>
 
-<h3>Links</h3>
-<%= render 'links/list', links: @linkset.links %>
-<br />
-<br />
 
-<%= link_to t('.back', :default => t("helpers.links.back")),
-              tenant_campaign_path(@linkset.campaign.tenant_id, @linkset.campaign_id), :class => 'btn btn-default'  %>
-<%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_linkset_path(@linkset), :class => 'btn btn-default' %>
+<!-- /Profile with cover -->
+<div class="profile-container">
+    <!-- Profile with cover -->
+    <div id="profile-cover" class="columns">
+        <div class="cover-overlay"></div>
+        <div class="column is-10 is-offset-1 heading-wrapper">
+            <div class="profile-heading">
+                <div class="columns">
+                    <div class="column is-1">
 
-<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              linkset_path(@linkset),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+                    </div>
+                    <div class="column is-5 name">
+                        <p>
+                            <span class="title light-text is-bold"><%= @linkset.name %></span>
+                        </p>
+                        <p class="tagline light-text">Campaign: <%= @linkset.campaign.title %></p>
+                        <div>
+
+                          <%= link_to tenant_campaign_path(@linkset.campaign.tenant_id, @linkset.campaign_id), :class => 'button dash-btnprimary-btn follow rounded width-300' do %>
+                                <i class="fa fa-check"></i>Back to campaign
+                            <% end %>
+                        </div>
+                    </div>
+                    <div class="column is-2 followers has-text-centered is-hidden-mobile">
+                        <p class="stat-val"><%= @linkset.links.count %></p>
+                        <p class="stat-key">Links</p>
+                    </div>
+                    <div class="column is-2 following has-text-centered is-hidden-mobile">
+                        <p class="stat-val">
+                        <%= @linkset.destinations.count %>
+                        </p>
+                        <p class="stat-key">Destinations</p>
+                    </div>
+                    <div class="column is-2 likes has-text-centered is-hidden-mobile">
+                        <p class="stat-val"><%= @linkset.sources.count %></p>
+                        <p class="stat-key">Sources</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Profile menu FAB -->
+        <div class="profile-fab">
+            <div class="fab-wrapper">
+              
+                <button id="show-notifications" class="notifications fab-btn mini ripple" data-toggle="tooltip" data-placement="left" data-title="Links">
+                    <i class="material-icons">link</i>
+                </button>
+                <%= link_to destinations_linkset_path(id: @linkset.id),
+                              :class => 'team fab-btn mini' do %>
+                    <i class="material-icons">people</i>
+                <% end %>
+
+                <button id="show-details" class="details fab-btn mini ripple" data-toggle="tooltip" data-placement="top" data-title="Profile">
+                    <i class="material-icons">settings</i>
+                </button>
+                <button id="profile-fab-trigger" class="fab-btn pop-fab">
+                    <span class="profile-menu-wrapper">
+                        <span class="icon-box-toggle">
+                            <span class="rotate">
+                                <i class="icon-line-top"></i>
+                                <i class="icon-line-center"></i>
+                                <i class="icon-line-bottom"></i>
+                            </span>
+                        </span>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <!-- /Profile menu FAB -->
+    </div>
+    <!-- /Profile with cover -->
+
+    <!-- Profile Sections -->
+    <div class="container">
+        <div class="columns">
+            <div class="column is-10 is-offset-1">
+                <div class="profile-sections-wrapper">
+                    <!-- Profile details -->
+                    <div id="profile-details" class="is-hidden">
+                        <div class="columns">
+                            <!-- Details sub view -->
+                            <div id="profile-view" class="column is-10 is-offset-1">
+                                <div class="flex-card is-top light-bordered raised animated preFadeInUp fadeInUp">
+                                  <div class="edit-button edit-trigger has-text-left">
+                                      <button class="button btn-dash secondary-btn raised ripple no-lh rounded">Edit linkset</button>
+                                  </div>
+                                  <% if false %>
+                                  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                                                edit_linkset_path(@linkset), :class => 'btn btn-default' %>
+                                  <% end %>
+                                    <div class="card-body">
+                                        <div class="columns">
+                                            <div class="column is-6">
+                                                <div class="info-section">
+                                                    <h1 class="info-heading">Campaign info</h1>
+                                                    <div class="info-divider"><span></span></div>
+                                                    <div class="info-item">
+                                                        <div class="columns is-gapless">
+                                                            <div class="column is-5">
+                                                                <div class="info-title">
+                                                                    Title :
+                                                                </div>
+                                                            </div>
+                                                            <div class="column is-7">
+                                                                <div class="info-description highlighted">
+                                                                    <%= @linkset.name %>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="info-item">
+                                                        <div class="columns is-gapless">
+                                                            <div class="column is-5">
+                                                                <div class="info-title">
+                                                                    Created :
+                                                                </div>
+                                                            </div>
+                                                            <div class="column is-7">
+                                                                <div class="info-description">
+                                                                    <%= time_ago_in_words(@linkset.created_at) %> ago
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="info-item">
+                                                        <div class="columns is-gapless">
+                                                            <div class="column is-5">
+                                                                <div class="info-title">
+                                                                    Created by :
+                                                                </div>
+                                                            </div>
+                                                            <div class="column is-7">
+                                                                <div class="info-description">
+                                                                    <%= @linkset.campaign.users.first.email %>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="info-section">
+                                                    <h1 class="info-heading">Admin info</h1>
+                                                    <div class="info-divider"><span></span></div>
+                                                    <div class="info-item">
+                                                        <div class="columns is-gapless">
+                                                            <div class="column is-5">
+                                                                <div class="info-title">
+                                                                    Email :
+                                                                </div>
+                                                            </div>
+                                                            <div class="column is-7">
+                                                                <div class="info-description highlighted">
+                                                                    <% @linkset.campaign.tenant.users.each do |user| %>
+                                                                      <% if user.is_admin? %>
+                                                                        <%= user.email %>
+                                                                      <% end %>
+                                                                    <% end %>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="column is-6">
+                                                <div class="info-section">
+                                                    <h1 class="info-heading">Company info</h1>
+                                                    <div class="info-divider"><span></span></div>
+                                                    <div class="info-item">
+                                                        <div class="columns is-gapless">
+                                                            <div class="column is-5">
+                                                                <div class="info-title">
+                                                                    Company :
+                                                                </div>
+                                                            </div>
+                                                            <div class="column is-7">
+                                                                <div class="info-description highlighted">
+                                                                    <%= @linkset.campaign.tenant.name %>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="edit-button has-text-right">
+                                      <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                                                    linkset_path(@linkset),
+                                                    :method => 'delete',
+                                                    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                                                    :class => 'btn btn-danger' %>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Details sub view -->
+
+                            <!-- Edit sub view -->
+                            <div id="edit-view" class="column is-10 is-offset-1 is-hidden">
+                                <div class="flex-card is-top light-bordered raised animated preFadeInUp fadeInUp">
+                                    <div class="edit-button has-text-centered">
+                                        <h3 class="title">Edit Profile</h3>
+                                        <div class="cross-container edit-trigger">
+                                            <span class="top"></span>
+                                            <span class="bottom"></span>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <%= render 'form' %>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Edit sub view -->
+                        </div>
+                    </div>
+                    <!-- /Profile details -->
+
+                    <%= render 'links/list', links: @linkset.links %>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Profile Sections -->
+</div>

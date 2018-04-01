@@ -23,6 +23,9 @@ gem 'pg', '~> 0.18'
 gem 'figaro'
 gem 'aws-sdk'
 gem 'stripe'
+gem 'simple-line-icons-rails'
+gem 'material_icons'
+gem "font-awesome-rails"
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

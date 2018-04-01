@@ -1,12 +1,14 @@
 class CampaignsController < ApplicationController
+  layout "profile", only: [:show]
   before_action :set_campaign, only: [:show, :edit, :update, :destroy, :users, :add_user]
-  before_action :set_tenant, only: [:show, :edit, :update, :destroy, :new, :create, :users, :add_user]
+  before_action :set_tenant, only: [:index, :show, :edit, :update, :destroy, :new, :create, :users, :add_user]
   before_action :verify_tenant
 
   # GET /campaigns
   # GET /campaigns.json
   def index
     @campaigns = Campaign.by_user_plan_and_tenant(params[:tenant_id], current_user)
+    @campaign = Campaign.new
   end
 
   # GET /campaigns/1
@@ -32,7 +34,7 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       if @campaign.save
-        format.html { redirect_to root_url, notice: 'Campaign was successfully created.' }
+        format.html { redirect_to tenant_campaign_path(@campaign, tenant_id: @tenant.id), notice: 'Campaign was successfully created.' }
       else
         format.html { render :new }
       end
@@ -44,7 +46,7 @@ class CampaignsController < ApplicationController
   def update
     respond_to do |format|
       if @campaign.update(campaign_params)
-        format.html { redirect_to root_url, notice: 'Campaign was successfully updated.' }
+        format.html { redirect_to tenant_campaign_path, notice: 'Campaign was successfully updated.' }
       else
         format.html { render :edit }
       end

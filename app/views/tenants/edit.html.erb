@@ -1,58 +1,79 @@
 <script language="JavaScript">
   Stripe.setPublishableKey("<%= ENV['STRIPE_TEST_PUBLISHABLE_KEY'] %>");
 </script>
+<div class="column is-5">
+    <div class="flex-card light-bordered light-raised">
+        <h3 class="card-heading has-icon no-margin">Edit Destination</h3>
+
+        <div class="card-body is-responsive">
+
 
 <%= form_for @tenant, url: update_plan_path, html: { class: "#{class_name_for_tenant_form(@tenant)}" } do |f| %>
-  <div class="form-group col-md-12 no-side-padding">
-    <%= f.label :name, 'Organization' %>
-    <span class='description'>(Unique name for your group or organization for the new account)</span>
-    <%= f.text_field :name, required: true, class: "form-control" %>
-  </div>
+  <div class="columns">
+      <div class="column is-12">
+          <div class="control-material is-secondary has-icon">
+              <%= f.text_field :name, required: true, class: "material-input" %>
+              <span class="material-highlight"></span>
+              <span class="bar"></span>
+              <%= f.label :name, 'Organization' %>
+              <span class='description'>(Unique name for your group or organization for the new account)</span>
+          </div>
 
-  <div class="form-group col-md-12 no-side-padding">
-    <%= f.label :plan %>
-    <%= f.select :plan, options_for_select(Plan.options, @tenant.plan ), {}, required: true, class: "form-control" %>
-  </div>
+          <div class="control">
+            <%= f.label :plan %>
+            <div class="mt-5"></div>
+            <%= f.select :plan, options_for_select(Plan.options, @tenant.plan ), {}, required: true, class: "chosen-select" %>
 
-  <% if @tenant.payment.blank? %>
-    <%= fields_for( :payment ) do |p| %>
-      <div class="row col-md-12">
-        <div class="form-group col-md-4 no-left-padding">
-          <%= p.label :card_number, "Card Number", data: { stripe: 'label' } %>
-          <%= p.text_field :card_number, class: "form-control", required: true,
-              data: { stripe: 'number' } %>
-        </div>
-        <div class="form-group col-md-2">
-          <%= p.label :card_cvv, "Card CVV", data: { stripe: 'label' } %>
-          <%= p.text_field :card_cvv, class: "form-control", required: true,
-              data: { stripe: 'cvv' } %>
-        </div>
-        <div class="form-group col-md-6">
-          <div class="col-md-12">
-            <%= p.label :card_expires, "Card Expires", data: { stripe: 'label' } %>
           </div>
-          <div class="col-md-3">
-            <%= p.select :card_expires_month,
-                options_for_select(Payment.month_options),
-                { include_blank: 'Month' },
-                "data-stripe" => "exp-month",
-                class: "form-control", required: true %>
+            <%= fields_for( :payment ) do |p| %>
+              <div class="control-material is-secondary has-icon">
+                <%= p.text_field :card_number, class: "material-input", required: true,
+                    data: { stripe: 'number' } %>
+                  <span class="material-highlight"></span>
+                  <span class="bar"></span>
+                  <%= p.label :card_number, "Card Number", data: { stripe: 'label' } %>
+              </div>
+              <div class="control-material is-secondary has-icon">
+                    <%= p.text_field :card_cvv, class: "material-input", required: true,
+                        data: { stripe: 'cvv' } %>
+                  <span class="material-highlight"></span>
+                  <span class="bar"></span>
+                  <%= p.label :card_cvv, "Card CVV", data: { stripe: 'label' } %>
+              </div>
+              <div class="columns mt-50">
+                  <div class="column">
+
+                      <div class="control">
+                          <%= p.label :card_expires, "Card Expires Month", data: { stripe: 'label' } %>
+                          <div class="mt-5"></div>
+                          <%= p.select :card_expires_month, options_for_select(Payment.month_options), { include_blank: 'Month' }, "data-stripe" => "exp-month",
+                              class: "chosen-select", required: true %>
+                      </div>
+                  </div>
+                  <div class="column">
+
+                      <div class="control">
+                          <%= p.label :card_expires, "Card Expires Year", data: { stripe: 'label' } %>
+                          <div class="mt-5"></div>
+                          <%= p.select :card_expires_year,
+                              options_for_select(Payment.year_options.push),
+                              { include_blank: 'Year' },
+                              class: "chosen-select",
+                              data: { stripe: "exp-year"}, required: true %>
+                      </div>
+                  </div>
+              </div>
+
+          <% end %>
+
+          <div class="has-text-centered mt-30">
+            <%= f.submit 'Update Plan', class: "button btn-dash secondary-btn is-raised is-fullwidth rounded no-lh", id: 'update_plan' %>
           </div>
-          <div class="col-md-3">
-            <%= p.select :card_expires_year,
-                options_for_select(Payment.year_options.push),
-                { include_blank: 'Year' },
-                class: "form-control",
-                data: { stripe: "exp-year"}, required: true %>
-          </div>
-        </div>
       </div>
-    <% end %>
-  <% end %>
-  <br />
 
-  <div class="row col-md-12">
-    <%= f.submit 'Update Plan', class: "btn btn-primary", id: 'update_plan' %>
+
   </div>
-
 <% end %>
+</div>
+</div>
+</div>

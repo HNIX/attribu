@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%= render 'layouts/head' %>
+  <body>
+    <%= render 'common/navbar' %>
+    <%= render 'common/child_push_sidebar_menu' %>
+    <%= render 'common/main_menu_sidebar' %>
+    <div id="dashboard-wrapper" class="columns">
+        <div class="content column is-12">
+        <%= bootstrap_flash %>
+        <%= yield %>
+      </div>
+      </div>
+      </div>
+  </body>
+</html>

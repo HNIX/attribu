@@ -1,50 +1,67 @@
-<div class="page-header">
-  <h3>Destinations for Linkset <%= @linkset.name %></h3>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @linkset_destinations.each do |linkset_destination| %>
-      <tr>
-        <td><%= linkset_destination.name %></td>
-        <td>
-            <%= link_to "Remove", destination_linkset_path(linkset_destination.destination_linksets.find_by(linkset_id: @linkset.id)),
-                                  :method => :delete,
-                                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                                  :class => 'btn btn-xs btn-danger' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <!-- User table widget -->
+  <div class="column is-6">
+      <div class="flex-card light-bordered light-raised">
+          <h3 class="card-heading has-icon">Destinations for Linkset <%= @linkset.name %></h3>
+          <table class="table hire-table">
+              <thead>
+                  <tr>
+                      <th></th>
+                      <th>Name</th>
+                      <th>URL</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% @linkset_destinations.each do |linkset_destination| %>
 
-<h3>Destinations to add to Linkset <%= @linkset.name %></h3>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @other_destinations.each do |other_destination| %>
-      <tr>
-        <td><%= other_destination.name %></td>
-        <td>
-          <%= link_to 'Add',
-                      add_destination_linkset_path(id: @linkset.id, destination_id: other_destination.id),
-                      :method => :put,
-                      :class => 'btn btn-xs btn-success' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+                  <tr>
+                      <td></td>
+                      <td><%= linkset_destination.name %></td>
+                      <td class="position"><%= linkset_destination.url %></td>
+                      <td>
+                        <%= link_to "Remove", destination_linkset_path(linkset_destination.destination_linksets.find_by(linkset_id: @linkset.id)),
+                                              :method => :delete,
+                                              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                                              :class => 'button is-small btn-align accent-btn raised rounded btn-outlined' %>
+                      </td>
+                  </tr>
+                  <% end %>
 
-<%= link_to 'Back', linkset_path(id: @linkset.id),
-                      :class => 'btn btn-primary' %>
+              </tbody>
+          </table>
+      </div>
+  </div>
+
+  <div class="column is-6">
+      <div class="flex-card light-bordered light-raised">
+          <h3 class="card-heading has-icon">Destinations to add to Linkset <%= @linkset.name %></h3>
+          <table class="table hire-table">
+              <thead>
+                  <tr>
+                      <th></th>
+                      <th>Name</th>
+                      <th>URL</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% @other_destinations.each do |other_destination| %>
+
+                  <tr>
+                      <td></td>
+                      <td><%= other_destination.name %></td>
+                      <td class="position"><%= other_destination.url %></td>
+                      <td>
+                        <%= link_to 'Add',
+                                    add_destination_linkset_path(id: @linkset.id, destination_id: other_destination.id),
+                                    :method => :put,
+                                    :class => 'button is-small btn-align accent-btn raised rounded btn-outlined' %>
+                      </td>
+                  </tr>
+                  <% end %>
+
+              </tbody>
+          </table>
+      </div>
+  </div>
+  <!-- /User table widget -->

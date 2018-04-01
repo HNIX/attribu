@@ -1,10 +1,12 @@
 class SourcesController < ApplicationController
+
   before_action :set_source, only: [:show, :edit, :update, :destroy]
 
   # GET /sources
   # GET /sources.json
   def index
     @sources = Source.all
+    @source = Source.new
   end
 
   # GET /sources/1

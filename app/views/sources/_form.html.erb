@@ -1,48 +1,44 @@
 <%= form_for @source, :html => { :class => "form-horizontal source" } do |f| %>
-
-  <% if @source.errors.any? %>
-    <div id="error_expl" class="panel panel-danger">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%= pluralize(@source.errors.count, "error") %> prohibited this source from being saved:</h3>
+<div class="columns">
+    <% if @source.errors.any? %>
+      <div id="error_expl" class="panel panel-danger">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= pluralize(@source.errors.count, "error") %> prohibited this source from being saved:</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+          <% @source.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
       </div>
-      <div class="panel-body">
-        <ul>
-        <% @source.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
+    <% end %>
+      <div class="column is-12">
+          <div class="control-material is-secondary has-icon">
+              <%= f.text_field :name, :class => 'material-input' %>
+              <span class="material-highlight"></span>
+              <span class="bar"></span>
+              <%= f.label :name %>
+          </div>
+          <div class="control-material is-secondary has-icon">
+              <%= f.text_field :medium, :class => 'material-input' %>
+              <span class="material-highlight"></span>
+              <span class="bar"></span>
+              <%= f.label :medium %>
+          </div>
+
+          <div class="control-material is-secondary has-icon">
+              <%= f.text_field :url, :class => 'material-input' %>
+              <span class="material-highlight"></span>
+              <span class="bar"></span>
+              <%= f.label :url %>
+          </div>
+
+          <div class="has-text-centered mt-30">
+            <%= f.submit nil, :class => 'button btn-dash secondary-btn is-raised is-fullwidth rounded no-lh' %>
+          </div>
       </div>
-    </div>
-  <% end %>
 
-  <div class="form-group">
-    <%= f.label :name, :class => 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.text_field :name, :class => 'form-control' %>
-    </div>
-    <%=f.error_span(:name) %>
   </div>
-  <div class="form-group">
-    <%= f.label :medium, :class => 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.text_field :medium, :class => 'form-control' %>
-    </div>
-    <%=f.error_span(:medium) %>
-  </div>
-  <div class="form-group">
-    <%= f.label :url, :class => 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.text_field :url, :class => 'form-control' %>
-    </div>
-    <%=f.error_span(:url) %>
-  </div>
-
-  <div class="form-group">
-    <div class="col-lg-offset-2 col-lg-10">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                sources_path, :class => 'btn btn-default' %>
-    </div>
-  </div>
-
 <% end %>

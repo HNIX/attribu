@@ -1,8 +1,18 @@
 <% if current_user %>
 
-  <h3 class="pull-right">Organization: <%= @tenant.name %></h3>
 
-  <%= render 'campaigns/list' %>
+  <div class="column is-4">
+      <%= render 'campaigns/list' %>
+  </div>
+
+  <div class="column is-4">
+    <%= render 'common/activity_feed' %>
+  </div>
+
+  <div class="column is-4">
+    <%= render 'sources/social_metro' %>
+    <%= render 'common/members' %>
+  </div>
 
 <% else %>
 
