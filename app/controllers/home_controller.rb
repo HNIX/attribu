@@ -6,15 +6,13 @@ class HomeController < ApplicationController
       if session[:tenant_id]
         Tenant.set_current_tenant session[:tenant_id]
       else
-        Tenant.set_current_tenant current_user.tenants.first
+        Tenant.set_current_tenant( current_user.tenants.first.tenant_id )
       end
 
       @tenant = Tenant.current_tenant
-      @campaigns = Campaign.by_user_plan_and_tenant(@tenant.id, current_user)
+      @campaigns = Campaign.by_user_plan_and_tenant(@tenant, current_user)
       params[:tenant_id] = @tenant.id
     end
-
-
 
   end
 
