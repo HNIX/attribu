@@ -1,55 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
-  <%= render 'layouts/head' %>
-  <body>
-    <%= render 'common/navbar' %>
-    <% if current_user %>
-    <%= render 'common/child_push_sidebar_menu' %>
-    <%= render 'common/main_menu_sidebar' %>
-    <% end %>
-    <!-- Main dashboard container -->
-    <div id="dashboard-wrapper" class="columns">
-        <div class="column"></div>
-        <div class="content column is-11">
+<html lang="en" >
+	<%= render 'layouts/head' %>
+    <!-- end::Body -->
+	<body  class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-light m-aside-left--fixed m-aside-left--offcanvas m-aside-left--minimize m-brand--minimize m-footer--push m-aside--offcanvas-default"  >
+		<!-- begin:: Page -->
+		<div class="m-grid m-grid--hor m-grid--root m-page">
+      <%= render 'common/navbar' %>
+		<!-- begin::Body -->
+			<div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+				<% if current_user %>
+				<%= render 'common/main_menu_sidebar' %>
+				<% end %>
+				<div class="m-grid__item m-grid__item--fluid m-wrapper">
+					<% if content_for(:subnav) %>
+						<%= yield(:subnav) %>
+					<% end %>
+					<div class="m-content">
+            <%= bootstrap_flash %>
+            <%= yield %>
+					</div>
+				</div>
+			</div>
+			<!-- end:: Body -->
+      <%= render 'common/footer' %>
+		</div>
+		<!-- end:: Page -->
 
-            <!-- Breadcrumbs -->
-            <!-- <nav class="breadcrumbs">
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li>Dashboard</li>
-                </ul>
-            </nav> -->
-            <!-- /Breadcrumbs -->
+	    <!-- begin::Scroll Top -->
+		<div id="m_scroll_top" class="m-scroll-top">
+			<i class="la la-arrow-up"></i>
+		</div>
+		<!-- end::Scroll Top -->		    <!-- begin::Quick Nav -->
 
-            <!-- Dashboard Wrapper -->
-            <div class="dashboard-wrapper">
+    <%= javascript_include_tag "application" %>
 
-                <div class="columns">
-                    <div class="column">
-                        <!-- Main content -->
-                        <div id="main-dashboard" class="section-wrapper">
-                            <!-- Dashboard content -->
-                            <div class="columns dashboard-columns">
-
-                              <%= bootstrap_flash %>
-                              <%= yield %>
-
-                            </div>
-                            <!-- /Dashboard content -->
-                        </div>
-                        <!-- /Main content -->
-                    </div>
-                    <!-- /Main view -->
-                </div>
-            </div>
-            <!-- /Dashboard Wrapper -->
-        </div>
-        <div class="column">
-        </div>
-    </div>
-    <!-- Main dashboard container -->
-
-
-
-  </body>
+	</body>
+	<!-- end::Body -->
 </html>

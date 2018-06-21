@@ -1,0 +1,27 @@
+<%- model_class = Campaign -%>
+
+<div class="m-subheader-search">
+  <h2 class="m-subheader-search__title"><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %>
+    <span class="m-subheader-search__desc">
+      Link Management
+    </span>
+  </h2>
+  <% if (@tenant.can_create_campaigns?) %>
+  <%= render 'form' %>
+  <% end %>
+  <form class="m-form">
+    <div class="m-grid m-grid--ver-desktop m-grid--desktop">
+      <div class="m-grid__item m-grid__item--middle">
+        <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-large m-input-icon--right">
+          <input type="text" class="form-control form-control-lg m-input m-input--pill" placeholder="Search Campaigns">
+        </div>
+      </div>
+      <div class="m-grid__item m-grid__item--middle">
+        <div class="m--margin-top-20 m--visible-tablet-and-mobile"></div>
+        <button type="button" class="btn m-btn--pill m-subheader-search__submit-btn">
+          Search
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

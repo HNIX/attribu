@@ -1,16 +1,13 @@
 <% if current_user %>
-
+  <% content_for :subnav do %>
+    <%= render 'common/subnav_search' %>
+  <% end %>
 
   <div class="column is-4">
       <%= render 'campaigns/list' %>
   </div>
 
   <div class="column is-4">
-    <%= render 'common/activity_feed' %>
-  </div>
-
-  <div class="column is-4">
-    <%= render 'sources/social_metro' %>
     <%= render 'common/members' %>
   </div>
 

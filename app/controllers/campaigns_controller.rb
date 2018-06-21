@@ -1,13 +1,13 @@
 class CampaignsController < ApplicationController
-  layout "profile", only: [:show]
   before_action :set_campaign, only: [:show, :edit, :update, :destroy, :users, :add_user]
   before_action :set_tenant, only: [:index, :show, :edit, :update, :destroy, :new, :create, :users, :add_user]
   before_action :verify_tenant
+  helper_method :sort_column, :sort_direction
 
   # GET /campaigns
   # GET /campaigns.json
   def index
-    @campaigns = Campaign.by_user_plan_and_tenant(params[:tenant_id], current_user)
+    @campaigns = Campaign.by_user_plan_and_tenant(@tenant.id, current_user).order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 5)
     @campaign = Campaign.new
   end
 
@@ -103,6 +103,14 @@ class CampaignsController < ApplicationController
         redirect_to :root,
         flash: { error: 'You are not authorized to access any organization other than your own'}
       end
+    end
+
+    def sort_column
+      Campaign.column_names.include?(params[:sort]) ? params[:sort] : "title"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 
 end

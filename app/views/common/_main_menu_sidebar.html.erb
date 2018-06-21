@@ -1,31 +1,48 @@
-<!-- Main sidebar menu -->
-<nav class="main-menu is-dark">
-    <div class="main-menu-inner">
-        <!-- Side icon menu -->
-        <ul>
-            <li class="main-logo">
-              <%= link_to image_tag('logos/square-green.svg'), root_path %>
-            </li>
-            <li class="side-icon-link">
-              <% if session[:tenant_id] %>
-                <%= link_to tenant_campaigns_path(tenant_id: session[:tenant_id]) do %><i class="fa fa-codepen"></i><% end %>
-            <% else %>
-                <%= link_to tenant_campaigns_path(tenant_id: @tenant.id) do %><i class="fa fa-codepen"></i><% end %>
-            <% end %>
-            </li>
-            <li  class="side-icon-link">
-                <%= link_to destinations_path do %><i class="fa fa-bullseye"></i><% end %>
-            </li>
-            <li class="side-icon-link">
-                <%= link_to sources_path do %><i class="fa fa-globe"></i><% end %>
-            </li>
-            <li class="side-icon" data-child-menu="settings-menu">
-                <i class="sl sl-icon-settings"></i>
-            </li>
-        </ul>
-        <!-- /Side icon menu -->
+<!-- BEGIN: Left Aside -->
+<button class="m-aside-left-close  m-aside-left-close--skin-light " id="m_aside_left_close_btn">
+  <i class="la la-close"></i>
+</button>
+<div id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-light ">
+  <!-- BEGIN: Aside Menu -->
+<div
+  id="m_ver_menu"
+  class="m-aside-menu  m-aside-menu--skin-light m-aside-menu--submenu-skin-light "
+  data-menu-vertical="true"
+   m-menu-scrollable="1" m-menu-dropdown-timeout="500"
+  >
+    <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
+      <li class="m-menu__item">
+        <% if session[:tenant_id] %>
+          <%= link_to tenant_campaigns_path(tenant_id: session[:tenant_id]), class:'m-menu__link' do %>
+            <i class="m-menu__link-icon fa fa-bookmark"></i>
+            <span class="m-menu__link-text">
+              Campaigns
+            </span>
+          <% end %>
+        <% else %>
+            <%= link_to tenant_campaigns_path(tenant_id: @tenant.id) do %><i class="fa fa-codepen"></i><% end %>
+        <% end %>
 
-        <!-- /Profile wrapper -->
-    </div>
-</nav>
-<!-- /Main sidebar menu -->
+      </li>
+      <li class="m-menu__item">
+        <%= link_to destinations_path, class:'m-menu__link' do %>
+          <i class="m-menu__link-icon fa fa-square"></i>
+          <span class="m-menu__link-text">
+            Destinations
+          </span>
+        <% end %>
+      </li>
+
+      <li class="m-menu__item">
+        <%= link_to sources_path, class:'m-menu__link' do %>
+          <i class="m-menu__link-icon fa fa-square"></i>
+          <span class="m-menu__link-text">
+            Sources
+          </span>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+  <!-- END: Aside Menu -->
+</div>
+<!-- END: Left Aside -->

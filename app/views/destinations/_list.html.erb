@@ -59,3 +59,40 @@
 
 <%= link_to 'New Destination', new_destination_path,
 :class => 'btn btn-primary' %>
+
+
+
+<% if @destinations.size > 0 %>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col"><%= sortable "title" %></th>
+        <th scope="col"><%= sortable "created_at" %></th>
+        <th scope="col">Linksets</th>
+        <th scope="col">Sources</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @campaigns.each do |campaign| %>
+      <tr>
+        <th scope="row"><%= campaign.id %></th>
+        <td><%= link_to campaign.title, tenant_campaign_path(campaign, tenant_id: @tenant.id), class: 'main-link' %></td>
+        <td><%= time_ago_in_words(campaign.created_at) %> ago</td>
+        <td><%= campaign.linksets.count %></td>
+        <td><% campaign.linksets.each do |linkset| %>
+          <% linkset.sources.each do |source| %>
+          <span class="tag squared is-info"><%= source.name %></span>
+          <% end %>
+        <% end %></td>
+        <td><%= link_to "Edit", edit_tenant_campaign_path(campaign, tenant_id: @tenant.id), class: "button is-small btn-align accent-btn raised rounded btn-outlined" %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @campaigns %>
+<% else %>
+  <p class="lead">You don't have any campaigns</p>
+<% end %>

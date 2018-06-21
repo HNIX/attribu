@@ -4,23 +4,26 @@
 
 </div>
 
-
-<div class="flex-card light-bordered light-raised padding-10">
-    <h3 class="card-heading">Members</h3>
-    <ul class="user-list">
-      <% @tenant.members.each do |member| %>
-        <li>
-            <div class="user-list-avatar">
-                <img src="https://place-hold.it/250x250" alt="">
-            </div>
-            <div class="user-list-info">
-                <div class="name"><%= member.user.email %></div>
-                <div class="position">CEO</div>
-            </div>
-            <div class="user-list-status is-online"></div>
-        </li>
-        <% end %>
-    </ul>
-    <%= link_to "Add Members", new_member_path, class: 'button btn-dash secondary-btn is-raised is-fullwidth rounded no-lh' %>
-</div>
-<!-- Widget -->
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col"><%= sortable "email" %></th>
+      <th scope="col"><%= sortable "created_at" %></th>
+      <th scope="col"><%= sortable "first_name" %></th>
+      <th scope="col"><%= sortable "last_name" %></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @tenant.members.each do |member| %>
+    <tr>
+      <th scope="row"><%= member.id %></th>
+      <td><%= member.user.email %></td>
+      <td><%= member.created_at %></td>
+      <td><%= member.first_name %></td>
+      <td><%= member.last_name %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= link_to "Add Members", new_member_path, class: 'button btn-dash secondary-btn is-raised is-fullwidth rounded no-lh' %>

@@ -1,5 +1,5 @@
 <%= form_for @destination, :html => { :class => "form-horizontal destination" } do |f| %>
-  <div class="columns">
+  <div class="m-grid m-grid--ver-desktop m-grid--desktop">
     <% if @destination.errors.any? %>
       <div id="error_expl" class="panel panel-danger">
         <div class="panel-heading">
@@ -14,24 +14,21 @@
         </div>
       </div>
     <% end %>
-      <div class="column is-12">
-          <div class="control-material is-secondary has-icon">
-              <%= f.text_field :name, :class => 'material-input' %>
-              <span class="material-highlight"></span>
-              <span class="bar"></span>
-              <%= f.label :name %>
+      <div class="m-grid__item m-grid__item--middle">
+          <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-large m-input-icon--right">
+              <%= f.text_field :name, :class => 'form-control form-control-lg m-input m-input--pill', :placeholder => :name  %>
+
           </div>
 
-          <div class="control-material is-secondary has-icon">
-              <%= f.text_field :url, :class => 'material-input' %>
-              <span class="material-highlight"></span>
-              <span class="bar"></span>
-              <%= f.label :url %>
-          </div>
+          <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-large m-input-icon--right">
+              <%= f.text_field :url, :class => 'form-control form-control-lg m-input m-input--pill', :placeholder => :url %>
 
-          <div class="has-text-centered mt-30">
-            <%= f.submit nil, :class => 'button btn-dash secondary-btn is-raised is-fullwidth rounded no-lh' %>
           </div>
+        </div>
+        <div class="m-grid__item m-grid__item--middle">
+
+          <div class="m--margin-top-20 m--visible-tablet-and-mobile"></div>
+          <%= f.submit nil, :class => 'btn m-btn--pill m-subheader-search__submit-btn' %>
       </div>
 
   </div>
